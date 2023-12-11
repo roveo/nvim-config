@@ -9,6 +9,9 @@ vim.opt.relativenumber = true
 vim.opt.fixeol = true
 vim.opt.title = true
 vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')} ~ %f"
+vim.opt.autochdir = true
+
+vim.wo.wrap = false
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

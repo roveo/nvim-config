@@ -53,25 +53,27 @@ require("packer").startup(function(use)
 			require("Comment").setup()
 		end,
 	})
-	use({
-		"ahmedkhalf/project.nvim",
-		config = function()
-			require("project_nvim").setup()
-		end,
-	})
+
+	-- movements
 	use({
 		"smoka7/hop.nvim",
 		tag = "*",
 	})
+
+	-- terminal + lazygit
 	use({
 		"akinsho/toggleterm.nvim",
 		tag = "*",
 		config = true,
 	})
+
+	-- custom pickers
+	use({ "axkirillov/easypick.nvim", requires = "nvim-telescope/telescope.nvim" })
 end)
 
 require("roveo.plugins.treesitter")
 require("roveo.plugins.telescope")
+require("roveo.plugins.easypick")
 require("roveo.plugins.cmp")
 
 require("roveo.plugins.dap")

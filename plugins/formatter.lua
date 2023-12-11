@@ -19,6 +19,14 @@ require("formatter").setup({
 				}
 			end,
 		},
+		sql = {
+			function()
+				return {
+					exe = "sqlfmt -",
+					stdin = true,
+				}
+			end,
+		},
 	},
 })
 

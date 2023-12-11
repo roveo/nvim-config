@@ -12,3 +12,13 @@ tt.setup({
 	open_mapping = [[<c-\>]],
 	direction = "float",
 })
+
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, close_on_exit = true })
+
+function _lazygit_toggle()
+	lazygit:toggle()
+end
+
+vim.keymap.set("n", "<C-g>", _lazygit_toggle)
+vim.keymap.set("t", "<C-g>", _lazygit_toggle)
