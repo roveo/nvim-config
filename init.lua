@@ -21,6 +21,6 @@ vim.g.loaded_netrwPlugin = 1
 
 require("roveo.plugins")
 require("roveo.colorscheme")
+require("roveo.map")
 require("roveo.lsp")
 
-require("roveo.map")
