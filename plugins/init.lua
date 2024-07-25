@@ -1,4 +1,16 @@
-require("packer").startup(function(use)
+local ensure_packer = function()
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
+end
+local packer_bootstrap = ensure_packer()
+
+return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	use({
@@ -27,20 +39,27 @@ require("packer").startup(function(use)
 	use("hrsh7th/vim-vsnip")
 
 	use("github/copilot.vim")
+	use("jparise/vim-graphql")
 
 	-- debugging
 	-- go
 	use("mfussenegger/nvim-dap")
 	use("leoluz/nvim-dap-go")
 
+	-- pest (rust parser generator)
+	use("pest-parser/pest.vim")
+
 	-- testing
 	use({
 		"nvim-neotest/neotest",
 		requires = {
+			"nvim-neotest/nvim-nio",
 			"nvim-lua/plenary.nvim",
-			{ "nvim-neotest/neotest-go", branch = "feat/testify-suite" },
+			"nvim-treesitter/nvim-treesitter",
+			-- { "roveo/neotest-go", branch = "feat/testify-suite" },
 			"nvim-neotest/neotest-python",
 			"nvim-neotest/neotest-plenary", -- this is for lua
+			"nvim-neotest/neotest-go",
 		},
 	})
 
@@ -54,34 +73,72 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- movements
-	use({
-		"smoka7/hop.nvim",
-		tag = "*",
-	})
+	-- show current function in top line
+	use("nvim-treesitter/nvim-treesitter-context")
 
 	-- terminal + lazygit
 	use({
 		"akinsho/toggleterm.nvim",
 		tag = "*",
-		config = true,
 	})
 
 	-- custom pickers
 	use({ "axkirillov/easypick.nvim", requires = "nvim-telescope/telescope.nvim" })
+
+	-- run Makefile targets
+	use("sopa0/telescope-makefile")
+
+	if packer_bootstrap then
+		require("packer").sync()
+	end
+
+	-- zen mode
+	use("folke/zen-mode.nvim")
+
+	-- better standard interfaces
+	use("stevearc/dressing.nvim")
+
+	-- auto-insert bracket/paren pairs
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
+
+	-- indentation guides
+	use({
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("ibl").setup({
+				scope = { enabled = false },
+			})
+		end,
+	})
+
+	-- highlight current word
+	use({
+		"yamatsum/nvim-cursorline",
+		config = function()
+			require("nvim-cursorline").setup({ cursorline = { enable = false }, cursorword = { enable = true } })
+		end,
+	})
+
+	use({ "folke/neodev.nvim", config = {} })
+
+	require("roveo.plugins.treesitter")
+	require("roveo.plugins.telescope")
+	require("roveo.plugins.easypick")
+	require("roveo.plugins.cmp")
+
+	require("roveo.plugins.dap")
+	require("roveo.plugins.dap-go")
+	require("roveo.plugins.neotest")
+
+	require("roveo.plugins.gitsigns")
+	require("roveo.plugins.nvim-tree")
+	require("roveo.plugins.formatter")
+	require("roveo.plugins.toggleterm")
+	require("roveo.plugins.zen-mode")
+	require("roveo.plugins.dressing")
 end)
-
-require("roveo.plugins.treesitter")
-require("roveo.plugins.telescope")
-require("roveo.plugins.easypick")
-require("roveo.plugins.cmp")
-
-require("roveo.plugins.dap")
-require("roveo.plugins.dap-go")
-require("roveo.plugins.neotest")
-
-require("roveo.plugins.gitsigns")
-require("roveo.plugins.nvim-tree")
-require("roveo.plugins.formatter")
-require("roveo.plugins.hop")
-require("roveo.plugins.toggleterm")

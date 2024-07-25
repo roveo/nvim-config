@@ -9,17 +9,18 @@ vim.opt.relativenumber = true
 vim.opt.fixeol = true
 vim.opt.title = true
 vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')} ~ %f"
-vim.opt.autochdir = true
+vim.opt.cursorline = true
+vim.opt.scrolloff = 10
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 vim.wo.wrap = false
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-require("roveo.map")
-require("roveo.colorscheme")
 require("roveo.plugins")
+require("roveo.colorscheme")
 require("roveo.lsp")
 
--- language-specific autocmds
-require("roveo.go")
+require("roveo.map")

@@ -1,5 +1,5 @@
 local go = require("formatter.filetypes.go")
-local py = require("formatter.filetypes.python")
+local rust = require("formatter.filetypes.rust")
 
 require("formatter").setup({
 	filetype = {
@@ -11,13 +11,24 @@ require("formatter").setup({
 			end,
 		},
 		python = {
-			py.black,
 			function()
 				return {
-					exe = "isort",
-					args = { "--profile=black" },
+					exe = "ruff",
+					args = { "format", "-q", "-" },
+					stdin = true,
 				}
 			end,
+			function()
+				return {
+					exe = "ruff",
+					args = { "check", "--select", "I", "--fix", "-q", "-" },
+					stdin = true,
+				}
+			end,
+		},
+		rust = {
+			rust.rustfmt,
+			rust.cargoFmt,
 		},
 		sql = {
 			function()

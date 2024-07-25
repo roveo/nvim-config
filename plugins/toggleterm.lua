@@ -9,10 +9,14 @@ tt.setup({
 		end
 	end,
 	shade_terminals = false,
-	open_mapping = [[<c-\>]],
+	open_mapping = [[<C-\>]],
 	direction = "float",
 })
 
+-- esc to enter normal mode while in terminal (scrolling etc)
+vim.keymap.set("t", "<C-n>", [[<C-\><C-n>]])
+
+-- lazygit with <C-g>
 local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, close_on_exit = true })
 

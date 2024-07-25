@@ -18,3 +18,17 @@ vim.keymap.set("n", "<leader>w", "<C-w>w")
 
 -- toggle floating terminal
 vim.keymap.set("n", "<C-i>", "<cmd>FloatermToggle<CR>")
+
+-- show doc hover
+vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
+
+-- when in visual [block] mode, replace selection when p instead of pasting after
+vim.keymap.set("x", "p", '"_dPj')
+
+-- press <Esc> in normal mode to remove search highlighting
+vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
+
+vim.keymap.set("n", "-", "<C-w>-")
+vim.keymap.set("n", "+", "<C-w>+")
+vim.keymap.set("n", ">", "<C-w>>")
+vim.keymap.set("n", "<", "<C-w><")

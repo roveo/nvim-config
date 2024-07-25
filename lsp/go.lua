@@ -1,7 +1,9 @@
-require("neodev").setup()
+local lspc = require("lspconfig")
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("lspconfig").lua_ls.setup({
+lspc.gopls.setup {
 	capabilities = capabilities,
-})
+}
+
+

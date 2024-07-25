@@ -1,16 +1,8 @@
 require("nvim-tree").setup({
 	view = {
-		width = 30,
+		width = 50,
 	},
 	reload_on_bufenter = true,
-	update_focused_file = {
-		enable = true,
-	},
-})
-
-vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>")
-
-require("nvim-tree").setup({
 	sync_root_with_cwd = true,
 	respect_buf_cwd = true,
 	update_focused_file = {
@@ -18,3 +10,5 @@ require("nvim-tree").setup({
 		update_root = true,
 	},
 })
+
+vim.keymap.set("n", "<C-f>", "<cmd>NvimTreeToggle<CR>")
